@@ -5,13 +5,18 @@
 namespace homeobject {
 void MockHomeObject::create_pg(PGInfo const& pg_info, PGManager::ok_cb const& cb) {
     LOGINFO("Creating PG: [{}] of [{}] members", pg_info.id, pg_info.members.size());
-    {
+    auto err = PGError::OK;
+    if (std::none_of(pg_info.members.begin(), pg_info.members.end(),
+                     [](PGMember const& m) { return 0 < m.priority; })) {
+        LOGERROR("No possible leader for PG: [{}]", pg_info.id);
+        err = PGError::INVALID_ARG;
+    } else {
         auto lg = std::scoped_lock(_pg_lock);
         [[maybe_unused]] auto [it, _] =
             _pg_map.insert(std::make_pair(pg_info.id, std::make_pair(pg_info, std::unordered_set< shard_id >())));
         DEBUG_ASSERT(_pg_map.end() != it, "Failure to insert Pg into Map!");
     }
-    if (cb) cb(PGError::OK);
+    if (cb) cb(err);
 }
 void MockHomeObject::replace_member(pg_id id, peer_id const& old_member, PGMember const& new_member,
                                     PGManager::ok_cb const& cb) {
