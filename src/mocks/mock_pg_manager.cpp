@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 namespace homeobject {
+
 void MockHomeObject::create_pg(PGInfo const& pg_info, PGManager::ok_cb const& cb) {
     LOGINFO("Creating PG: [{}] of [{}] members", pg_info.id, pg_info.members.size());
     auto err = PGError::OK;
@@ -18,6 +19,7 @@ void MockHomeObject::create_pg(PGInfo const& pg_info, PGManager::ok_cb const& cb
     }
     if (cb) cb(err);
 }
+
 void MockHomeObject::replace_member(pg_id id, peer_id const& old_member, PGMember const& new_member,
                                     PGManager::ok_cb const& cb) {
     LOGINFO("Replacing PG: [{}] member [{}] with [{}]", id, to_string(old_member), to_string(new_member.id));

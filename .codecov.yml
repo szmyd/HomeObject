@@ -3,7 +3,5 @@ codecov:
     require_ci_to_pass: yes
 
 ignore:
-  - "**/*_test.c*"
-  - "**/*_test.h*"
   - "**/*_generated.h"
-  - "**/tests/**
+  - "src/tests/**

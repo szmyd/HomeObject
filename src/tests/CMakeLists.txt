@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.13)
 
 include_directories (BEFORE .)
 
-add_subdirectory(mocks)
-
 add_executable(test_home_object)
 target_sources(test_home_object PRIVATE test_home_object.cpp)
 target_link_libraries(test_home_object
