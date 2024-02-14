@@ -7,7 +7,7 @@ include_directories (AFTER .)
 find_package(Threads QUIET REQUIRED)
 find_package(homestore QUIET REQUIRED)
 
-list(APPEND COMMON_DEPS homestore::homestore)
+list(APPEND COMMON_DEPS sisl::buffer)
 
 if(BUILD_TESTING)
 # This is a work-around for not being able to specify the link
